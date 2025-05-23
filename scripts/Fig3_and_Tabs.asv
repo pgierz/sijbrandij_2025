@@ -1,0 +1,187 @@
+clear all
+EXP={'plake';'alakeGLAC';'alake13ka'};
+mskFIS=ncread('../data/mskFIS.nc','matrix');
+mskLIS=ncread('../data/mskLIS.nc','matrix');
+mskF12=mskFIS(:);
+mskF12=mskF12(:,ones(12,1));
+mskL12=mskLIS(:);
+mskL12=mskL12(:,ones(12,1));
+mthlen=[31,28,31,30,31,30,31,31,30,31,30,31];
+
+for j=1:4  % loop over experiments
+    if j<4
+       exp=['z_' EXP{j}];
+       exp2=EXP{j}
+       fname=['../data/ymonmean_' exp2 '_dEBM_out.nc'];
+       forc=['../data/ymonmean_' exp2 '_for_dEBM.nc'];
+       lat=ncread(forc,'lat');
+       [nx,ny]=size(lat);
+        T=reshape(ncread(forc,'air_temp'),nx*ny,12)-273.15;
+        PDD=PDD4(T,5);
+    else
+       fname=['../data/ymonmean_verjans25_dEBM_out_1970_1999.nc'];
+              
+       forc=['../data/ymonmean_Verjans2025_for_dEBM_1970_1999.nc'];
+       lat=ncread(forc,'lat_2');
+       [nx,ny]=size(lat);
+        T=reshape(ncread(forc,'temp2'),nx*ny,12)-273.15;
+        PDD=PDD4(T,5);
+    end	    
+    SWD=reshape(ncread(forc,'swd'),nx*ny,12);
+    A=reshape(ncread(fname,'albedo'),nx*ny,12);
+    M=reshape(ncread(fname,'melt'),nx*ny,12);
+    Refr=reshape(ncread(fname,'refreeze'),nx*ny,12);
+    Snow=reshape(ncread(fname,'snow'),nx*ny,12);
+    Rain=reshape(ncread(fname,'rain'),nx*ny,12);
+    SMB=reshape(ncread(fname,'SMB'),nx*ny,12);
+    for i=1:12
+      M(:,i)=M(:,i)*mthlen(i);
+      Snow(:,i)=Snow(:,i)*mthlen(i);
+      Rain(:,i)=Rain(:,i)*mthlen(i);
+      Refr(:,i)=Refr(:,i)*mthlen(i);
+      SMB(:,i)=SMB(:,i)*mthlen(i);
+      PDD(:,i)=PDD(:,i)*mthlen(i);    
+    end
+      
+    pdd{j}=squeeze(sum(PDD,2));
+    mm{j}=squeeze(sum(M,2));
+    if (j<4) 
+      mmL=   squeeze(nanusum(M.*mskL12,1))*25/100000;
+      mmF=   squeeze(nanusum(M.*mskF12,1))*25/100000;
+      rfL=squeeze(nanusum(Refr.*mskL12,1))*25/1000000;
+      rnL=squeeze(nanusum(Rain.*mskL12,1))*25/1000000;
+      snL=squeeze(nanusum(Snow.*mskL12,1))*25/1000000;
+      smbL=squeeze(nanusum(SMB.*mskL12,1))*25/1000000;
+      rfF=squeeze(nanusum(Refr.*mskF12,1))*25/1000000;
+      rnF=squeeze(nanusum(Rain.*mskF12,1))*25/1000000;
+      snF=squeeze(nanusum(Snow.*mskF12,1))*25/1000000;
+      smbF=squeeze(nanusum(SMB.*mskF12,1))*25/1000000;
+        melt_seas{j}=[sum(mmL,2) sum(mmL(:,[12 1 2]),2) sum(mmL(:,[3:5]),2) sum(mmL(:,[6:8]),2) sum(mmL(:,[9:11]),2);...
+	sum(mmF,2) sum(mmF(:,[12 1 2]),2) sum(mmF(:,[3:5]),2) sum(mmF(:,[6:8]),2) sum(mmF(:,[9:11]),2)];
+        refr_seas{j}=[sum(rfL,2) sum(rfL(:,[12 1 2]),2) sum(rfL(:,[3:5]),2) sum(rfL(:,[6:8]),2) sum(rfL(:,[9:11]),2);...
+	sum(rfF,2) sum(rfF(:,[12 1 2]),2) sum(rfF(:,[3:5]),2) sum(rfF(:,[6:8]),2) sum(rfF(:,[9:11]),2)];
+        rain_seas{j}=[sum(rnL,2) sum(rnL(:,[12 1 2]),2) sum(rnL(:,[3:5]),2) sum(rnL(:,[6:8]),2) sum(rnL(:,[9:11]),2);...
+	sum(rnF,2) sum(rnF(:,[12 1 2]),2) sum(rnF(:,[3:5]),2) sum(rnF(:,[6:8]),2) sum(rnF(:,[9:11]),2)];
+        snow_seas{j}=[sum(snL,2) sum(snL(:,[12 1 2]),2) sum(snL(:,[3:5]),2) sum(snL(:,[6:8]),2) sum(snL(:,[9:11]),2);...
+	sum(snF,2) sum(snF(:,[12 1 2]),2) sum(snF(:,[3:5]),2) sum(snF(:,[6:8]),2) sum(snF(:,[9:11]),2)];
+        smb_seas{j}=[sum(smbL,2) sum(smbL(:,[12 1 2]),2) sum(smbL(:,[3:5]),2) sum(smbL(:,[6:8]),2) sum(smbL(:,[9:11]),2);...
+	sum(smbF,2) sum(smbF(:,[12 1 2]),2) sum(smbF(:,[3:5]),2) sum(smbF(:,[6:8]),2) sum(smbF(:,[9:11]),2)];
+     
+    end
+    if (j==1)
+    swd1=squeeze(nanusum(SWD.*M,2))./squeeze(sum(M,2));
+    end
+end
+IC=2; Seas=1;
+Tab1FIS=[smb_seas{2}(IC,Seas) smb_seas{3}(IC,Seas) smb_seas{1}(IC,Seas);...
+          snow_seas{2}(IC,Seas) snow_seas{3}(IC,Seas) snow_seas{1}(IC,Seas);...
+          refr_seas{2}(IC,Seas) refr_seas{3}(IC,Seas) refr_seas{1}(IC,Seas);...
+          melt_seas{2}(IC,Seas) melt_seas{3}(IC,Seas) melt_seas{1}(IC,Seas);...
+          rain_seas{2}(IC,Seas) rain_seas{3}(IC,Seas) rain_seas{1}(IC,Seas)]
+IC=2; Seas=2;
+TabS1DJF=[smb_seas{2}(IC,Seas) smb_seas{3}(IC,Seas) smb_seas{1}(IC,Seas);...
+          snow_seas{2}(IC,Seas) snow_seas{3}(IC,Seas) snow_seas{1}(IC,Seas);...
+          refr_seas{2}(IC,Seas) refr_seas{3}(IC,Seas) refr_seas{1}(IC,Seas);...
+          melt_seas{2}(IC,Seas) melt_seas{3}(IC,Seas) melt_seas{1}(IC,Seas);...
+          rain_seas{2}(IC,Seas) rain_seas{3}(IC,Seas) rain_seas{1}(IC,Seas)]
+IC=2; Seas=3;
+TabS1MAM=[smb_seas{2}(IC,Seas) smb_seas{3}(IC,Seas) smb_seas{1}(IC,Seas);...
+          snow_seas{2}(IC,Seas) snow_seas{3}(IC,Seas) snow_seas{1}(IC,Seas);...
+          refr_seas{2}(IC,Seas) refr_seas{3}(IC,Seas) refr_seas{1}(IC,Seas);...
+          melt_seas{2}(IC,Seas) melt_seas{3}(IC,Seas) melt_seas{1}(IC,Seas);...
+          rain_seas{2}(IC,Seas) rain_seas{3}(IC,Seas) rain_seas{1}(IC,Seas)]
+IC=2; Seas=4;
+TabS1JJA=[smb_seas{2}(IC,Seas) smb_seas{3}(IC,Seas) smb_seas{1}(IC,Seas);...
+          snow_seas{2}(IC,Seas) snow_seas{3}(IC,Seas) snow_seas{1}(IC,Seas);...
+          refr_seas{2}(IC,Seas) refr_seas{3}(IC,Seas) refr_seas{1}(IC,Seas);...
+          melt_seas{2}(IC,Seas) melt_seas{3}(IC,Seas) melt_seas{1}(IC,Seas);...
+          rain_seas{2}(IC,Seas) rain_seas{3}(IC,Seas) rain_seas{1}(IC,Seas)]
+IC=2; Seas=5;
+TabS1SON=[smb_seas{2}(IC,Seas) smb_seas{3}(IC,Seas) smb_seas{1}(IC,Seas);...
+          snow_seas{2}(IC,Seas) snow_seas{3}(IC,Seas) snow_seas{1}(IC,Seas);...
+          refr_seas{2}(IC,Seas) refr_seas{3}(IC,Seas) refr_seas{1}(IC,Seas);...
+          melt_seas{2}(IC,Seas) melt_seas{3}(IC,Seas) melt_seas{1}(IC,Seas);...
+          rain_seas{2}(IC,Seas) rain_seas{3}(IC,Seas) rain_seas{1}(IC,Seas)]
+IC=1; Seas=1;
+Tab1LIS=[smb_seas{2}(IC,Seas) smb_seas{3}(IC,Seas) smb_seas{1}(IC,Seas);...
+          snow_seas{2}(IC,Seas) snow_seas{3}(IC,Seas) snow_seas{1}(IC,Seas);...
+          refr_seas{2}(IC,Seas) refr_seas{3}(IC,Seas) refr_seas{1}(IC,Seas);...
+          melt_seas{2}(IC,Seas) melt_seas{3}(IC,Seas) melt_seas{1}(IC,Seas);...
+          rain_seas{2}(IC,Seas) rain_seas{3}(IC,Seas) rain_seas{1}(IC,Seas)]
+IC=1; Seas=2;
+TabS2DJF=[smb_seas{2}(IC,Seas) smb_seas{3}(IC,Seas) smb_seas{1}(IC,Seas);...
+          snow_seas{2}(IC,Seas) snow_seas{3}(IC,Seas) snow_seas{1}(IC,Seas);...
+          refr_seas{2}(IC,Seas) refr_seas{3}(IC,Seas) refr_seas{1}(IC,Seas);...
+          melt_seas{2}(IC,Seas) melt_seas{3}(IC,Seas) melt_seas{1}(IC,Seas);...
+          rain_seas{2}(IC,Seas) rain_seas{3}(IC,Seas) rain_seas{1}(IC,Seas)]
+IC=1; Seas=3;
+TabS2MAM=[smb_seas{2}(IC,Seas) smb_seas{3}(IC,Seas) smb_seas{1}(IC,Seas);...
+          snow_seas{2}(IC,Seas) snow_seas{3}(IC,Seas) snow_seas{1}(IC,Seas);...
+          refr_seas{2}(IC,Seas) refr_seas{3}(IC,Seas) refr_seas{1}(IC,Seas);...
+          melt_seas{2}(IC,Seas) melt_seas{3}(IC,Seas) melt_seas{1}(IC,Seas);...
+          rain_seas{2}(IC,Seas) rain_seas{3}(IC,Seas) rain_seas{1}(IC,Seas)]
+IC=1; Seas=4;
+TabS2JJA=[smb_seas{2}(IC,Seas) smb_seas{3}(IC,Seas) smb_seas{1}(IC,Seas);...
+          snow_seas{2}(IC,Seas) snow_seas{3}(IC,Seas) snow_seas{1}(IC,Seas);...
+          refr_seas{2}(IC,Seas) refr_seas{3}(IC,Seas) refr_seas{1}(IC,Seas);...
+          melt_seas{2}(IC,Seas) melt_seas{3}(IC,Seas) melt_seas{1}(IC,Seas);...
+          rain_seas{2}(IC,Seas) rain_seas{3}(IC,Seas) rain_seas{1}(IC,Seas)]
+IC=1; Seas=5;
+TabS2SON=[smb_seas{2}(IC,Seas) smb_seas{3}(IC,Seas) smb_seas{1}(IC,Seas);...
+          snow_seas{2}(IC,Seas) snow_seas{3}(IC,Seas) snow_seas{1}(IC,Seas);...
+          refr_seas{2}(IC,Seas) refr_seas{3}(IC,Seas) refr_seas{1}(IC,Seas);...
+          melt_seas{2}(IC,Seas) melt_seas{3}(IC,Seas) melt_seas{1}(IC,Seas);...
+          rain_seas{2}(IC,Seas) rain_seas{3}(IC,Seas) rain_seas{1}(IC,Seas)]
+p1=pdd{1};
+p2=pdd{2};
+p3=pdd{3};
+p4=pdd{4};
+m1=mm{1};
+m2=mm{2};
+m3=mm{3};
+m4=mm{4};
+idxF=find((mskFIS(:)==1));
+idxL=find((mskLIS(:)==1));
+if 0
+figure(1)
+axes('XGrid','on','YGrid','on', ...
+    'Box','on','Layer','top','Nextplot','add');
+h2=scatter(0,0,15,'c','filled')
+h1=scatter(0,0,15,'k','filled')
+h3=scatter(0,0,15,'m','filled')
+scatter(p2,m2,9,'k','filled','MarkerFaceAlpha',0.02)
+scatter(p1,m1,9,'c','filled','MarkerFaceAlpha',0.02)
+scatter(p4,m4,9,'m','filled','MarkerFaceAlpha',0.09)
+xlim([0 600])
+ylim([0 4000])
+xlabel('degree days (^oC day)')
+ylabel('melt (mm/m^2)')
+legend([h1,h2,h3],{'REF13ka';'PL13ka';'GrIS_{PD}'})
+%exportgraphics(gcf,'../FIGS/Fig3_2.pdf')
+figure(2)
+clf
+axes('XGrid','on','YGrid','on', ...
+    'Box','on','Layer','top','Nextplot','add');
+h1=scatter(0,0,15,'b','filled')
+h2=scatter(0,0,15,'r','filled')
+scatter(p1(idxL),m1(idxL),9,'b','filled','MarkerFaceAlpha',0.01)
+scatter(p2(idxF),m2(idxF),9,'r','filled','MarkerFaceAlpha',0.01)
+ylabel('melt (mm/m^2)')
+xlabel('degree days (^oC day)')
+legend([h1,h2],{'LIS';'FIS'})
+xlim([0 600])
+ylim([0 4000])
+%exportgraphics(gcf,'../FIGS/Fig3_3.pdf')
+figure(3)
+clf
+axes('XGrid','on','YGrid','on', ...
+    'Box','on','Layer','top','Nextplot','add');
+h2=scatter(p1,m1,9,swd1,'filled','MarkerFaceAlpha',0.02)
+ylabel('melt (mm/m^2)')
+xlabel('degree days (^oC day)')
+cb=colorbar('Location','East')
+ylabel(cb,'SWD (W/m^2)')
+xlim([0 600])
+ylim([0 4000])
+%exportgraphics(gcf,'../FIGS/Fig3_1.pdf')
+end

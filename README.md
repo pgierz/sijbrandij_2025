@@ -31,7 +31,7 @@ You can also use the supplied [`environment.yml`](./environment.yml):
 $ conda env create
 ```
 ## Data Download
-Data for this publication has been uploaded to Zenodo: [DOI](https://doi.org/10.5281/zenodo.15497082)
+Data for this publication has been uploaded to Zenodo [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.15497082.svg)](https://doi.org/10.5281/zenodo.15497082)
 
 You can use the script to download the corresponding data:
 

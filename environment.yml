@@ -1,0 +1,9 @@
+name: sijbrandij_2025
+dependencies:
+  - cdo
+  - matplotlib
+  - numpy
+  - netcdf4
+  - cartopy
+  - xarray
+  - scipy

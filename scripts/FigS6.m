@@ -46,10 +46,10 @@ grid
 legend([h1,h2,h3],{'REF13ka';'PL13ka';'PL13ka_{warm}'},'location','NorthWest')
 xlabel('month')
 xlim([1 12])
-ylabel('2m Temperature ()')
+ylabel('2m Temperature (K)')
 title('FIS')
 set(gca,'FontSize',14)
-%exportgraphics(gcf,'../FIGS/temp_seasonalityFIS.pdf')
+exportgraphics(gcf,'../FIGS/temp_seasonalityFIS.pdf')
 
 figure(2)
 clf
@@ -62,10 +62,10 @@ grid
 legend([h1,h2,h3],{'REF13ka';'PL13ka';'PL13ka_{warm}'},'location','NorthWest')
 xlabel('month')
 xlim([1 12])
-ylabel('2m Temperature ()')
-title('NAIS')
+ylabel('2m Temperature (K)')
+title('LIS')
 set(gca,'FontSize',14)
-%exportgraphics(gcf,'../FIGS/temp_seasonalityNAIS.pdf')
+exportgraphics(gcf,'../FIGS/temp_seasonalityLIS.pdf')
 
 figure(3)
 clf
@@ -87,7 +87,7 @@ xlim([1 12])
 ylabel('precipitation (Gt)')
 title('FIS')
 set(gca,'FontSize',14)
-exportgraphics(gcf,'../supp_figures/S7_FIS.pdf')
+exportgraphics(gcf,'../FIGS/S6_FIS.pdf')
 figure(4)
 clf
 hold
@@ -109,5 +109,5 @@ ylabel('precipitation (Gt)')
 title('LIS')
 set(gca,'FontSize',14)
 
-exportgraphics(gcf,'../supp_figures/S7_LIS.pdf')
+exportgraphics(gcf,'../FIGS/S6_LIS.pdf')
 

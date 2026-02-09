@@ -17,7 +17,6 @@ Reproduce all figures directly in your browser via Binder -- no local installati
 ```
 .
 ├── scripts/          # Figure generation scripts (Jupyter notebooks, Python, MATLAB)
-├── figures/          # Pre-generated figures
 ├── FIGS/             # Output directory for notebook-generated figures
 ├── environment.yml   # Conda environment specification
 └── download-data.sh  # Script to fetch data from Zenodo
@@ -62,21 +61,25 @@ conda activate sijbrandij_2025
 
 | Script | Output |
 |--------|--------|
-| `Fig1_echam_T2m.ipynb` | Figure 1 (temperature) |
-| `Fig1_echam_precip.ipynb` | Figure 1 (precipitation) |
-| `Fig1_generate_significance_masks.py` | Significance masks for Figure 1 |
-| `Fig2_debm_SMB.ipynb` | Figure 2 (surface mass balance) |
-| `Fig3_and_Tabs.m` | Figure 3 and tables |
-| `FigS2_*.ipynb` | Supplementary Figure S2 |
-| `PL2023_figS3_S6.m` | Supplementary Figures S3-S6 |
-| `FigS7.m` | Supplementary Figure S7 |
+| `Fig1_echam_T2m.ipynb` | Figure 1_1, 1_2 .. 1_6 (temperature) |
+| `Fig2_echam_precip.ipynb` | Figure 2_1, 2_2,..2_6 (precipitation) |
+| `Fig1_2_generate_significance_masks.py` | Significance masks for Figures 1&2 |
+| `Fig3_debm_SMB.ipynb` | Figure 3_1, 3_2, .. 3_6 (surface mass balance) |
+| `Fig4_and_Tabs.m` | Figure 4_1, 4_2, 4_3 and all tables (article and Suppl.)  |
+| `FigS2_5.m` | Supplementary Figures S2..S5 |
+| `FigS7S8_lakemodel.m` | Lake model and Supplementary Figures S7&S8 |
+| `input_anom3.m` | called by FigS2_5.m |
+| `PDD4.m` | called by Fig4.m |
+
 
 ## Citation
 
 If you use this code or data, please cite:
 
-> Sijbrandij, L., Gierz, P., & Krebs-Kanzow, U. (2025). Proglacial lakes substantially modulate the surface mass balance of retreating ice sheets. *Geophysical Research Letters*.
-
+>Lianne Sijbrandij, Uta Krebs-Kanzow, Paul Gierz, et al. Proglacial lakes substantially modulate the surface mass balance of deglacial ice sheets. ESS Open Archive . February 06, 2026.
+DOI: 10.22541/essoar.174861028.86292675/v2 
+and
+Gierz, P., Sijbrandij, L., & Krebs-Kanzow, U. (2026). Proglacial lakes substantially modulate the surface mass balance of retreating ice sheets: Data (egusphere-2026-740) [Data set]. Zenodo. https://doi.org/10.5281/zenodo.18545093
 ## License
 
 This project is licensed under the MIT License -- see [LICENSE](LICENSE) for details.

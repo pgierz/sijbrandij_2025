@@ -27,6 +27,8 @@ tiledlayout(1,3,"TileSpacing","compact","Padding","compact")
 nexttile
 hold
 [cbh,figh]=pcolor_nl(anom1',lev2,map)
+[cbh,figh]=pcolor_nl(anom1',lev2,map)
+caxis([1 length(lev2)])
 caxis([1 length(lev2)])
 contour(topo',[1 1],'Color',[.6 .6 .6],'Linewidth',.2);
 contour(topo'.*gmsk',[1000 2000 3000],'Color',[.7 .7 .7],'Linewidth',.2);

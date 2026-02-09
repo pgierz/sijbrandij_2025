@@ -3,13 +3,13 @@ set -euo pipefail
 ###############################################################################
 #
 # Downloads the accompanying data from Zenodo
-# https://doi.org/10.5281/zenodo.15497082
+# https://doi.org/10.5281/zenodo.18545093
 #
 # Dr. Paul Gierz
 # AWI Bremerhaven
 ###############################################################################
 
-RECORD_ID="15497082"
+RECORD_ID="18545093"
 ZENODO_URL="https://zenodo.org/api/records/${RECORD_ID}/files-archive"
 DATA_DIR="data"
 ZIP_FILE="data.zip"

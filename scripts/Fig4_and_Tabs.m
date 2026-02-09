@@ -19,7 +19,7 @@ for j=1:4  % loop over experiments
         T=reshape(ncread(forc,'air_temp'),nx*ny,12)-273.15;
         PDD=PDD4(T,5);
     else
-       fname=['../data/ymonmean_verjans25_dEBM_out_1970_1999.nc'];
+       fname=['../data/ymonmean_Verjans2025_dEBM_out_1970_1999.nc'];
               
        forc=['../data/ymonmean_Verjans2025_for_dEBM_1970_1999.nc'];
        lat=ncread(forc,'lat_2');
@@ -46,8 +46,8 @@ for j=1:4  % loop over experiments
     pdd{j}=squeeze(sum(PDD,2));
     mm{j}=squeeze(sum(M,2));
     if (j<4) 
-      mmL=   squeeze(nanusum(M.*mskL12,1))*25/100000;
-      mmF=   squeeze(nanusum(M.*mskF12,1))*25/100000;
+      mmL=   squeeze(nanusum(M.*mskL12,1))*25/1000000;
+      mmF=   squeeze(nanusum(M.*mskF12,1))*25/1000000;
       rfL=squeeze(nanusum(Refr.*mskL12,1))*25/1000000;
       rnL=squeeze(nanusum(Rain.*mskL12,1))*25/1000000;
       snL=squeeze(nanusum(Snow.*mskL12,1))*25/1000000;
@@ -142,7 +142,7 @@ m3=mm{3};
 m4=mm{4};
 idxF=find((mskFIS(:)==1));
 idxL=find((mskLIS(:)==1));
-if 0
+if 1
 figure(1)
 axes('XGrid','on','YGrid','on', ...
     'Box','on','Layer','top','Nextplot','add');
@@ -157,7 +157,7 @@ ylim([0 4000])
 xlabel('degree days (^oC day)')
 ylabel('melt (mm/m^2)')
 legend([h1,h2,h3],{'REF13ka';'PL13ka';'GrIS_{PD}'})
-%exportgraphics(gcf,'../FIGS/Fig3_2.pdf')
+exportgraphics(gcf,'../FIGS/Fig4_2.pdf')
 figure(2)
 clf
 axes('XGrid','on','YGrid','on', ...
@@ -171,7 +171,7 @@ xlabel('degree days (^oC day)')
 legend([h1,h2],{'LIS';'FIS'})
 xlim([0 600])
 ylim([0 4000])
-%exportgraphics(gcf,'../FIGS/Fig3_3.pdf')
+exportgraphics(gcf,'../FIGS/Fig4_3.pdf')
 figure(3)
 clf
 axes('XGrid','on','YGrid','on', ...
@@ -180,8 +180,9 @@ h2=scatter(p1,m1,9,swd1,'filled','MarkerFaceAlpha',0.02)
 ylabel('melt (mm/m^2)')
 xlabel('degree days (^oC day)')
 cb=colorbar('Location','East')
+colormap(jet)
 ylabel(cb,'SWD (W/m^2)')
 xlim([0 600])
 ylim([0 4000])
-%exportgraphics(gcf,'../FIGS/Fig3_1.pdf')
+exportgraphics(gcf,'../FIGS/Fig4_1.pdf')
 end

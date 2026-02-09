@@ -43,12 +43,12 @@ anom3=mean(t2mPL(:,:,[6 7 8]),3).*smsk_t_JJAap;
 %figtit={'T2m (JJA, PL13ka-REF13ka)';'T2m (JJA, PL13ka_{warm}-REF13ka)';'T2m (JJA, PL13ka-PL13ka_{warm})'}
 clabel='\Delta T2M (K)';
 [cbh,h1]=input_anom3(anom1,anom2,anom3,lev2,map,clabel)
-exportgraphics(h1, '~/paper/Sijbrandij_2023/rev1/data_and_scripts/LSijbrandij_2023/supp_figures//S5.pdf' , 'ContentType', 'image')
+exportgraphics(h1, '../FIGS/S4.pdf' , 'ContentType', 'image')
 anom1=mean(t2m(:,:, [12 1 2]),3).*smsk_t_DJF;
 anom2=mean(t2mw(:,:, [12 1 2]),3).*smsk_t_DJFa;
 anom3=mean(t2mPL(:,:,[12 1 2]),3).*smsk_t_DJFap;
 [cbh,h1]=input_anom3(anom1,anom2,anom3,lev2,map,clabel)
-exportgraphics(h1, '~/paper/Sijbrandij_2023/rev1/data_and_scripts/LSijbrandij_2023/supp_figures//S6.pdf' , 'ContentType', 'image')
+exportgraphics(h1, '../FIGS/S5.pdf' , 'ContentType', 'image')
 clabel='\Delta precip (m/yr)'
 lev2=[-.5 -.3 -.15 -.1 -.075 -.05 -0.025 0 .025 .05 .075 .1 .15 .3 .5]
 [map,lev]=create_anom_map_from2maps(-length(find(lev<0)), length(find(lev>0)),length(lev),map_test,map_yr);
@@ -56,9 +56,9 @@ anom1=mean(pp_seas(:,:,6:8),3).*smsk_pJJA;;
 anom2=mean(ppw_seas(:,:,6:8),3).*smsk_paJJA;;
 anom3=mean(ppPL_seas(:,:,6:8),3).*smsk_papJJA;
 [cbh,h1]=input_anom3(anom1,anom2,anom3,lev2,map,clabel)
-exportgraphics(h1, '~/paper/Sijbrandij_2023/rev1/data_and_scripts/LSijbrandij_2023/supp_figures//S3.pdf' , 'ContentType', 'image')
+exportgraphics(h1, '../FIGS/S2.pdf' , 'ContentType', 'image')
 anom1=mean(pp_seas(:,:,[12 1 2]),3).*smsk_pDJF;
 anom2=mean(ppw_seas(:,:,[12 1 2]),3).*smsk_paDJF;
 anom3=mean(ppPL_seas(:,:,[12 1 2]),3).*smsk_papDJF;
 [cbh,h1]=input_anom3(anom1,anom2,anom3,lev2,map,clabel)
-exportgraphics(h1, '~/paper/Sijbrandij_2023/rev1/data_and_scripts/LSijbrandij_2023/supp_figures//S4.pdf' , 'ContentType', 'image')
+exportgraphics(h1, ['../FIGS/S3.pdf'] , 'ContentType', 'image')

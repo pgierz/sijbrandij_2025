@@ -1,0 +1,50 @@
+cff-version: 1.2.0
+title: >-
+  Proglacial lakes substantially modulate the surface mass
+  balance of retreating ice sheets
+message: >-
+  If you use this software or data, please cite both the article
+  and the dataset.
+type: software
+authors:
+  - family-names: Sijbrandij
+    given-names: Lianne
+    affiliation: Alfred Wegener Institute
+  - family-names: Gierz
+    given-names: Paul
+    affiliation: Alfred Wegener Institute
+    orcid: https://orcid.org/0000-0002-4512-087X
+  - family-names: Krebs-Kanzow
+    given-names: Uta
+    affiliation: Alfred Wegener Institute
+repository-code: https://github.com/pgierz/sijbrandij_2025
+license: MIT
+preferred-citation:
+  type: article
+  title: >-
+    Proglacial lakes substantially modulate the surface mass
+    balance of retreating ice sheets
+  authors:
+    - family-names: Sijbrandij
+      given-names: Lianne
+    - family-names: Gierz
+      given-names: Paul
+    - family-names: Krebs-Kanzow
+      given-names: Uta
+  journal: Geophysical Research Letters
+  year: 2025
+references:
+  - type: data
+    title: >-
+      Data for: Proglacial lakes substantially modulate the
+      surface mass balance of retreating ice sheets
+    authors:
+      - family-names: Sijbrandij
+        given-names: Lianne
+      - family-names: Gierz
+        given-names: Paul
+      - family-names: Krebs-Kanzow
+        given-names: Uta
+    year: 2025
+    doi: 10.5281/zenodo.15497082
+    repository: https://zenodo.org/doi/10.5281/zenodo.15497082

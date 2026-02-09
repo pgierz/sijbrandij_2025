@@ -1,9 +1,13 @@
 name: sijbrandij_2025
+channels:
+  - conda-forge
 dependencies:
-  - cdo
-  - matplotlib
-  - numpy
-  - netcdf4
+  - python>=3.9
   - cartopy
-  - xarray
+  - cdo
+  - cmocean
+  - matplotlib
+  - netcdf4
+  - numpy
   - scipy
+  - xarray

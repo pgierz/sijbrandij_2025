@@ -17,7 +17,8 @@ Reproduce all figures directly in your browser via Binder -- no local installati
 ```
 .
 ├── scripts/          # Figure generation scripts (Jupyter notebooks, Python, MATLAB)
-├── figures/          # Generated figure outputs
+├── figures/          # Pre-generated figures
+├── FIGS/             # Output directory for notebook-generated figures
 ├── environment.yml   # Conda environment specification
 └── download-data.sh  # Script to fetch data from Zenodo
 ```
@@ -34,11 +35,13 @@ The scripts use internal experiment identifiers that differ from the manuscript:
 
 ## Data
 
-Model output data is archived on Zenodo. Download with:
+Model output data (~18 GB) is archived on Zenodo. Download with:
 
 ```bash
 ./download-data.sh
 ```
+
+**Note:** On Binder, the data download takes approximately 15-20 minutes. Please be patient while the download completes before running the notebooks.
 
 ## Local Installation
 

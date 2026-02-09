@@ -1,0 +1,17 @@
+name: Keep Binder Warm
+
+on:
+  schedule:
+    # Run weekly on Sunday at 04:00 UTC
+    - cron: '0 4 * * 0'
+  workflow_dispatch:
+
+jobs:
+  warmup:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Trigger Binder build
+        uses: s-weigand/trigger-mybinder-build@v1
+        with:
+          target-repo: pgierz/sijbrandij_2025
+          target-ref: main

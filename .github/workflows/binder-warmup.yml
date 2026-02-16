@@ -13,5 +13,4 @@ jobs:
       - name: Trigger Binder build
         uses: s-weigand/trigger-mybinder-build@v1
         with:
-          target-repo: pgierz/sijbrandij_2025
-          target-ref: main
+          target-repo: pgierz/sijbrandij_2025/main

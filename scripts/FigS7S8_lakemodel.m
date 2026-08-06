@@ -4,7 +4,7 @@ hold
 exper='FIS'
 tsurf_lm=zeros(365,2);
 tsurf_cm=zeros(365,2);
-Cexps={'PL13ka_{warm}','PL13ka'}
+Cexps={'PL13ka','PL13ka_{cold}'}
 for proglacial=0:1
 
 
@@ -50,8 +50,8 @@ alpha_if     =  2*(alpha(1:end-1).*alpha(2:end))./(alpha(1:end-1)+alpha(2:end))
 
 % Read Forcing data: monthly mean 2m air temperature, incoming shortwave radiation, downward
 % longwave radiation, and seaice cover from climate simulations 
-% Read surface temperature as limit for experiment "PL13ka" and as
-% reference for"PL13ka_warm"    
+% Read surface temperature as limit for experiment "PL13ka_cold" and as
+% reference for"PL13ka"    
 
 air_temp12 = ncread(fname,'temp2');                      
 swd12      = ncread(fname,'swd');
@@ -124,12 +124,6 @@ end
 % dM = sum(dQ(:))*1e11/L_i/1e12 (Gt) of ice melting in the lake
 dM = sum(dQ(:))*1e11/L_i/1e12
 dQ = sum(dQ(:))
-figure(1)
-Tm=movmean(Tmean(:),365);
-Tm=Tm(366:end-365);
-plot((1:length(Tm))/365+.5,Tm,'LineWidth',2);
-ylabel('T_{surf} (^o C)')
-
 figure(2)
 if proglacial
   subplot(212)

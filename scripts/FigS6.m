@@ -43,7 +43,7 @@ h2=plot((tPLF)','c-','LineWidth',2);
 h3=plot((tPLF2)','r','LineWidth',2);
 
 grid
-legend([h1,h2,h3],{'REF13ka';'PL13ka';'PL13ka_{warm}'},'location','NorthWest')
+legend([h1,h2,h3],{'REF13ka';'PL13ka_{cold}';'PL13ka'},'location','NorthWest')
 xlabel('month')
 xlim([1 12])
 ylabel('2m Temperature (K)')
@@ -59,7 +59,7 @@ h2=plot((tPLL)','c-','LineWidth',2);
 h3=plot((tPLL2)','r','LineWidth',2);
 
 grid
-legend([h1,h2,h3],{'REF13ka';'PL13ka';'PL13ka_{warm}'},'location','NorthWest')
+legend([h1,h2,h3],{'REF13ka';'PL13ka_{cold}';'PL13ka'},'location','NorthWest')
 xlabel('month')
 xlim([1 12])
 ylabel('2m Temperature (K)')
@@ -81,7 +81,7 @@ plot(rPLF.*mthl'.*25e6/1e12','c:','LineWidth',2);
 plot(rPLF2.*mthl'.*25e6/1e12','r:','LineWidth',2);
 
 grid
-legend([h1,h2,h3],{'REF13ka';'PL13ka';'PL13ka_{warm}'},'location','NorthWest')
+legend([h1,h3,h2],{'REF13ka';'PL13ka';'PL13ka_{cold}'},'location','NorthWest')
 xlabel('month')
 xlim([1 12])
 ylabel('precipitation (Gt)')
@@ -102,7 +102,7 @@ plot(rPLL.*mthl'.*25e6/1e12','c:','LineWidth',2);
 plot(rPLL2.*mthl'.*25e6/1e12','r:','LineWidth',2);
 
 grid
-legend([h1,h2,h3],{'REF13ka';'PL13ka';'PL13ka_{warm}'},'location','NorthWest')
+legend([h1,h3,h2],{'REF13ka';'PL13ka';'PL13ka_{cold}'},'location','NorthWest')
 xlabel('month')
 xlim([1 12])
 ylabel('precipitation (Gt)')

@@ -142,6 +142,7 @@ m3=mm{3};
 m4=mm{4};
 idxF=find((mskFIS(:)==1));
 idxL=find((mskLIS(:)==1));
+idxA=[idxF;idxL];
 if 1
 figure(1)
 axes('XGrid','on','YGrid','on', ...
@@ -155,8 +156,8 @@ scatter(p4,m4,9,'m','filled','MarkerFaceAlpha',0.09)
 xlim([0 600])
 ylim([0 4000])
 xlabel('degree days (^oC day)')
-ylabel('melt (mm/m^2)')
-legend([h1,h2,h3],{'REF13ka';'PL13ka';'GrIS_{PD}'})
+ylabel('melt (kg/yr)')
+legend([h1,h2,h3],{'REF13ka';'PL13ka_{cold}';'GrIS_{PD}'})
 exportgraphics(gcf,'../FIGS/Fig4_2.pdf')
 figure(2)
 clf
@@ -165,8 +166,8 @@ axes('XGrid','on','YGrid','on', ...
 h1=scatter(0,0,15,'b','filled')
 h2=scatter(0,0,15,'r','filled')
 scatter(p1(idxL),m1(idxL),9,'b','filled','MarkerFaceAlpha',0.01)
-scatter(p2(idxF),m2(idxF),9,'r','filled','MarkerFaceAlpha',0.01)
-ylabel('melt (mm/m^2)')
+scatter(p1(idxF),m1(idxF),9,'r','filled','MarkerFaceAlpha',0.01)
+ylabel('melt (kg/yr)')
 xlabel('degree days (^oC day)')
 legend([h1,h2],{'LIS';'FIS'})
 xlim([0 600])
@@ -176,13 +177,15 @@ figure(3)
 clf
 axes('XGrid','on','YGrid','on', ...
     'Box','on','Layer','top','Nextplot','add');
+%h2=scatter(p1(idxA),m1(idxA),9,swd1(idxA),'filled','MarkerFaceAlpha',0.02)
 h2=scatter(p1,m1,9,swd1,'filled','MarkerFaceAlpha',0.02)
-ylabel('melt (mm/m^2)')
+ylabel('melt (kg/yr)')
 xlabel('degree days (^oC day)')
 cb=colorbar('Location','East')
 colormap(jet)
 ylabel(cb,'SWD (W/m^2)')
 xlim([0 600])
 ylim([0 4000])
+%caxis([200 360])
 exportgraphics(gcf,'../FIGS/Fig4_1.pdf')
 end
